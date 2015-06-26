@@ -20,4 +20,5 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "wisper"
+  spec.add_dependency "message_bus"
 end

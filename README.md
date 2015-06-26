@@ -1,7 +1,7 @@
 # Wisper::MessageBus
 
-Relay Wisper events to the outside world via
-[MessageBus](https://github.com/SamSaffron/message_bus)
+Relay [Wisper](https://github.com/krisleech/wisper) events to other processes
+as JSON using [MessageBus](https://github.com/SamSaffron/message_bus).
 
 ## Installation
 
@@ -11,13 +11,22 @@ gem 'wisper-message_bus'
 
 ## Usage
 
-You need to subscribe the relay to all events you want relayed to MessageBus.
+In order to see that events are being correctly relayed to MessageBus start up
+a MessageBus server listening on the "/wisper" channel.
 
-### Relay events from a single publisher
+```ruby
+require 'message_bus'
+MessageBus.subscribe("/wisper") { |msg| puts JSON.parse(msg.data) }
+```
+
+Now broadcast Wisper events from a publishers to instances of
+`Wisper::MessageBus::Relay` using the regular Wisper broadcasting features.
 
 ```ruby
 my_publisher.subscribe(Wisper::MessageBus::Relay.new)
 ```
+
+Any events broadcast by the publisher will be relayed to MessageBus.
 
 ## Development
 
@@ -27,7 +36,9 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/krisleech/wisper-message_bus. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome.
+
+This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 ## License
 
